@@ -1,15 +1,43 @@
 package main
 
 import (
+	"flag"
 	"log"
 	"net/http"
+	"strings"
 	"sync"
 	"sync/atomic"
 
 	"github.com/ant0ine/go-json-rest/rest"
+	"github.com/prometheus/client_golang/prometheus"
 )
 
+var (
+	// Set up metrics
+	voteAmountTotalMetrics = prometheus.NewCounterVec(
+		prometheus.CounterOpts{
+			Name: "votes_amount_total",
+			Help: "The amount of votes cast, partitioned by name",
+		}, []string{"name"})
+)
+
+var (
+	addr = flag.String("listen-address", ":8080", "The address to listen on for HTTP requests.")
+)
+
+func init() {
+	prometheus.Unregister(prometheus.NewGoCollector())
+	prometheus.MustRegister(voteAmountTotalMetrics)
+}
+
 func main() {
+	flag.Parse()
+	http.Handle("/metrics", prometheus.Handler())
+	http.Handle("/api/", http.StripPrefix("/api", apiHandler()))
+	log.Fatal(http.ListenAndServe(*addr, nil))
+}
+
+func apiHandler() http.Handler {
 	api := rest.NewApi()
 	api.Use(rest.DefaultDevStack...)
 	router, err := rest.MakeRouter(
@@ -20,7 +48,7 @@ func main() {
 		log.Fatal(err)
 	}
 	api.SetApp(router)
-	log.Fatal(http.ListenAndServe(":8080", api.MakeHandler()))
+	return api.MakeHandler()
 }
 
 // Vote contains the name of the item to vote on
@@ -34,14 +62,16 @@ type VoteCount struct {
 	Count uint64 `json:"count"`
 }
 
-// Increment the vote count
+// Increment is a function that increments the vote count by one.
 func (vc *VoteCount) Increment() {
 	atomic.AddUint64(&vc.Count, 1)
 }
 
-var store = map[string]*VoteCount{}
-
-var storeLock = sync.RWMutex{}
+var (
+	// Create the store where we keep our vote counts
+	store     = map[string]*VoteCount{}
+	storeLock = sync.RWMutex{}
+)
 
 // GetResults returns the results of all votes
 func GetResults(w rest.ResponseWriter, r *rest.Request) {
@@ -65,6 +95,10 @@ func MakeVote(w rest.ResponseWriter, r *rest.Request) {
 		rest.Error(w, "name required", 400)
 		return
 	}
+
+	vote.Name = strings.ToLower(vote.Name)
+
+	voteAmountTotalMetrics.WithLabelValues(vote.Name).Inc()
 
 	storeLock.RLock()
 	var voteCount *VoteCount

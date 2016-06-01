@@ -1,0 +1,10 @@
+FROM golang
+
+ADD Makefile /
+WORKDIR /
+RUN make setup
+
+ADD ./voting-app /go/src/github.com/ordina-jworks/prometheus-demo/voting-app
+ADD ./voting-generator /go/src/github.com/ordina-jworks/prometheus-demo/voting-generator
+RUN make build-go
+CMD ["/bin/bash"]

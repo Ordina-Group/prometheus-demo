@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	apiURL  = flag.String("api-url", "http://localhost:8080/api", "The URL of the API to call")
+	apiURL  = flag.String("api-url", "http://voting-app:8080/api", "The URL of the API to call")
 	timeout = flag.Int("timeout", 5000, "The timeout for each API call")
 )
 

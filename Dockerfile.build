@@ -4,7 +4,9 @@ ADD Makefile /
 WORKDIR /
 RUN make setup
 
-ADD ./voting-app /go/src/github.com/ordina-jworks/prometheus-demo/voting-app
-ADD ./voting-generator /go/src/github.com/ordina-jworks/prometheus-demo/voting-generator
+ADD ./voting-app/main.go /go/src/github.com/ordina-jworks/prometheus-demo/voting-app/main.go
+ADD ./voting-generator/main.go /go/src/github.com/ordina-jworks/prometheus-demo/voting-generator/main.go
+
 RUN make build-go
+
 CMD ["/bin/bash"]

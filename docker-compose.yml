@@ -1,0 +1,75 @@
+version: '2'
+
+services:
+
+  prometheus:
+    build: ./prometheus
+    ports:
+    - "9090"
+    networks:
+      - monitoring
+    volumes:
+      - targetgroups:/etc/prometheus
+
+  prommer:
+    image: tomverelst/prommer
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - targetgroups:/etc/prometheus
+
+  promdashdb:
+    image: "prom/promdash"
+    entrypoint: ./bin/rake db:migrate
+    volumes:
+      - promdashdb:/tmp/prom
+    environment:
+      - DATABASE_URL=sqlite3:/tmp/prom/file.sqlite3
+
+  promdash:
+    image: "prom/promdash"
+    ports:
+      - "3000"
+    networks:
+      - monitoring
+    volumes:
+      - promdashdb:/tmp/prom
+    environment:
+      - DATABASE_URL=sqlite3:/tmp/prom/file.sqlite3
+
+  cadvisor:
+    image: "google/cadvisor"
+    volumes:
+      - "/:/rootfs:ro"
+      - "/var/run:/var/run:rw"
+      - "/sys:/sys:ro"
+      - "/var/lib/docker/:/var/lib/docker:ro"
+    ports:
+      - "8080"
+    networks:
+      - monitoring
+    labels:
+      - "prometheus-target=cadvisor"
+
+
+  voting-app:
+    image: "ordina-jworks/voting-app"
+    ports:
+      - "8080"
+    networks:
+      - monitoring
+    labels:
+      - "prometheus-target=voting-app"
+
+  voting-generator:
+    image: "ordina-jworks/voting-generator"
+    ports:
+      - "8001:8080"
+    networks:
+      - monitoring
+
+networks:
+  monitoring:
+
+volumes:
+  promdashdb:
+  targetgroups:

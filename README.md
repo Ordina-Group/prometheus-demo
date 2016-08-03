@@ -1,6 +1,12 @@
 # Monitoring with Prometheus Demo
 
-## Running this demo
+* Prometheus server with custom service discovery
+* PromDash
+* A voting app with a _RESTish_ API
+* A voting generator app that generates votes
+
+
+## Running This Demo
 
 **Prerequisites**
 
@@ -12,6 +18,13 @@
 ```bash
 $ make
 ```
+
+## Prometheus Server With Custom Service Discovery
+
+The Prometheus server is configured to use [Prommer](https://github.com/tomverelst/prommer) as service discovery.
+Prommer listens to the Docker events stream and updates the 
+
+
 ## Voting App
 
 For each vote,

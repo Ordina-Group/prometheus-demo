@@ -1,4 +1,4 @@
-.PHONY: default setup dev dev-docker prometheus-docker binaries build-docker build-go clean clean-voting-app clean-voting-generator
+.PHONY: default setup dev dev-docker prometheus-docker binaries build-docker build-go start stop clean clean-voting-app clean-voting-generator
 
 MAIN=main
 

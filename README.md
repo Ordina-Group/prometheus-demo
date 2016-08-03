@@ -1,16 +1,23 @@
 # Monitoring with Prometheus Demo
 
-* Prometheus server with custom service discovery
-* PromDash
-* A voting app with a _RESTish_ API
-* A voting generator app that generates votes
+This project demonstrates the possibilities of monitoring with Prometheus.
 
+# Overview
+
+This project contains the following components:
+
+* [Prometheus](https://prometheus.io)
+* [Prommer](https://github.com/tomverelst/prommer) for custom target discovery
+* [PromDash](https://github.com/prometheus/promdash)
+* [cAdvisor](https://github.com/google/cadvisor) which exposes container metrics
+* A voting app with a _RESTish_ API which exposes custom metrics for the votes
+* A voting generator app that generates votes
 
 ## Running This Demo
 
 **Prerequisites**
 
-* Docker
+* [Docker](https://docker.com)
 * Make
 
 **Building and running**
@@ -19,10 +26,14 @@
 $ make
 ```
 
+All build steps are containerized with Docker.
+After the build process,
+all services are started with Docker Compose.
+
 ## Prometheus Server With Custom Service Discovery
 
 The Prometheus server is configured to use [Prommer](https://github.com/tomverelst/prommer) as service discovery.
-Prommer listens to the Docker events stream and updates the 
+Prommer listens to the Docker events stream and updates the target groups configuration of Prometheus.
 
 
 ## Voting App

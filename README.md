@@ -30,6 +30,12 @@ All build steps are containerized with Docker.
 After the build process,
 all services are started with Docker Compose.
 
+Stopping the demo can be done with the following command:
+
+```bash
+$ make stop
+```
+
 ## Prometheus Server With Custom Service Discovery
 
 The Prometheus server is configured to use [Prommer](https://github.com/tomverelst/prommer) as service discovery.
@@ -55,7 +61,7 @@ The label `vote` is added and the value is set to the name of the vote.
 ```bash
 $ curl -X POST -H 'Content-Type: application/json' \ 
 -d '{"name":"prometheus"}' \
-http://localhost:8000/api/vote
+http://$(docker-compose port voting-app 8080)/api/vote
 
 {
   "prometheus": {
@@ -63,7 +69,7 @@ http://localhost:8000/api/vote
   }
 }
 
-$ curl -X GET http://localhost:8000/api/results
+$ curl -X GET http://$(docker-compose port voting-app 8080)/api/results
 
 {
   "prometheus": {

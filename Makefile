@@ -19,7 +19,7 @@ HOST_IP=$(ifconfig en0 | awk '/ *inet /{print $2}')
 
 default: dev
 
-dev: build-docker up
+dev: build-docker start
 
 dev-docker:
 	(cd ${VOTING_APP_SOURCE} && docker build -f Dockerfile.dev --tag=ordina-jworks/${VOTING_APP} .)
@@ -50,10 +50,10 @@ build-go:
 	CGO_ENABLED=0 GOOS=linux go build -ldflags "-s" -a -installsuffix cgo -o ${BUILD_VOTING_APP_BINARY} ./go/src/github.com/ordina-jworks/prometheus-demo/voting-app/main.go
 	CGO_ENABLED=0 GOOS=linux go build -ldflags "-s" -a -installsuffix cgo -o ${BUILD_VOTING_GENERATOR_BINARY} ./go/src/github.com/ordina-jworks/prometheus-demo/voting-generator/main.go
 
-up:
+start:
 	@docker-compose up -d
 
-down:
+stop:
 	@docker-compose down
 
 clean: clean-voting-app clean-voting-generator

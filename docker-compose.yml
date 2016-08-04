@@ -17,25 +17,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - targetgroups:/etc/prometheus
 
-  promdashdb:
-    image: "prom/promdash"
-    entrypoint: ./bin/rake db:migrate
-    volumes:
-      - promdashdb:/tmp/prom
-    environment:
-      - DATABASE_URL=sqlite3:/tmp/prom/file.sqlite3
-
-  promdash:
-    image: "prom/promdash"
-    ports:
-      - "3000"
-    networks:
-      - monitoring
-    volumes:
-      - promdashdb:/tmp/prom
-    environment:
-      - DATABASE_URL=sqlite3:/tmp/prom/file.sqlite3
-
   cadvisor:
     image: "google/cadvisor"
     volumes:

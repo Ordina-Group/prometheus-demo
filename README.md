@@ -8,7 +8,6 @@ This project contains the following components:
 
 * [Prometheus](https://prometheus.io)
 * [Prommer](https://github.com/tomverelst/prommer) for custom target discovery
-* [PromDash](https://github.com/prometheus/promdash)
 * [cAdvisor](https://github.com/google/cadvisor) which exposes container metrics
 * A voting app with a _RESTish_ API which exposes custom metrics for the votes
 * A voting generator app that generates votes

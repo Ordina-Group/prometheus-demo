@@ -37,7 +37,7 @@ setup:
 .PHONY: binaries
 binaries:
 	docker build -t ${BUILD_IMAGE} -f ./Dockerfile.build .
-	docker run -t ${BUILD_IMAGE} /bin/true
+	docker run --rm -t ${BUILD_IMAGE} /bin/true
 	mkdir -p ${VOTING_APP_BUILD}
 	mkdir -p ${VOTING_GENERATOR_BUILD}
 	docker cp `docker ps -q -n=1`:${BUILD_VOTING_APP_BINARY} ${VOTING_APP_BINARY}

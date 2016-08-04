@@ -60,12 +60,17 @@ services:
     labels:
       - "prometheus-target=voting-app"
 
-  voting-generator:
+  vote-dogs:
     image: "ordina-jworks/voting-generator"
-    ports:
-      - "8001:8080"
     networks:
       - monitoring
+    command: -vote=dog -max-delay=1000
+
+  vote-cats:
+    image: "ordina-jworks/voting-generator"
+    networks:
+      - monitoring
+    command: -vote=cat -max-delay=1000
 
 networks:
   monitoring:

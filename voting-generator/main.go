@@ -12,8 +12,10 @@ import (
 )
 
 var (
-	apiURL  = flag.String("api-url", "http://voting-app:8080/api", "The URL of the API to call")
-	timeout = flag.Int("timeout", 5000, "The timeout for each API call")
+	apiURL   = flag.String("api-url", "http://voting-app:8080/api", "The URL of the API to call")
+	timeout  = flag.Int("timeout", 5000, "The timeout for each API call")
+	vote     = flag.String("vote", "dog", "The thing to vote for")
+	maxDelay = flag.Int("max-delay", 200, "The maximum delay between each vote")
 )
 
 func main() {
@@ -25,14 +27,7 @@ func main() {
 
 	go func() {
 		for {
-			vote("cat")
-			sleep()
-		}
-	}()
-
-	go func() {
-		for {
-			vote("dog")
+			makeVote(*vote)
 			sleep()
 		}
 	}()
@@ -41,18 +36,18 @@ func main() {
 
 }
 
-// Vote
+// Vote holds
 type Vote struct {
 	Name string `json:"name"`
 }
 
 // Sleep for a random amount of time
 func sleep() {
-	time.Sleep(time.Duration(rand.Float64()*200) * time.Millisecond)
+	time.Sleep(time.Duration(rand.Float64()*500) * time.Millisecond)
 }
 
 // Calls the voting API
-func vote(name string) {
+func makeVote(name string) {
 
 	fmt.Println("Voting for " + name)
 

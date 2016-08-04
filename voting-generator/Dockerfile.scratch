@@ -4,4 +4,4 @@ EXPOSE 8080
 
 ADD build/main /
 
-CMD ["/main"]
+ENTRYPOINT ["/main"]

@@ -1,8 +1,6 @@
 FROM scratch
-MAINTAINER Tom Verelst "tom.verelst@ordina.com"
+MAINTAINER Tom Verelst <tom.verelst@ordina.com>
 EXPOSE 8080
-
-#COPY certs/certs /etc/ssl/certs/ca-certificates.crt
 
 ADD build/main /
 

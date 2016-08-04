@@ -3,7 +3,7 @@ version: '2'
 services:
 
   prometheus:
-    build: ./prometheus
+    image: ordina-jworks/prometheus-prommer
     ports:
     - "9090"
     networks:

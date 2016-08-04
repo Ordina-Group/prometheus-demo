@@ -22,6 +22,9 @@ This project contains the following components:
 
 **Building and running**
 
+The project can be completely built and run with the default `make` command.
+
+
 ```bash
 $ make
 ```
@@ -30,10 +33,19 @@ All build steps are containerized with Docker.
 After the build process,
 all services are started with Docker Compose.
 
-Stopping the demo can be done with the following command:
+To stop all services, use the `stop` command:
 
 ```bash
 $ make stop
+```
+
+To clean the project,
+use the `clean` command.
+This will remove all built binaries and images.
+Note that this will not remove any third-party images (like cAdvisor) that were pulled in.
+
+```bash
+$ make clean
 ```
 
 ## Prometheus Server With Custom Service Discovery

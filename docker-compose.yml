@@ -26,6 +26,11 @@ services:
     volumes:
       - grafana-storage:/var/lib/grafana
 
+#  alertmanager:
+#    image: prom/alertmanager
+#    networks:
+#      - monitoring
+
   cadvisor:
     image: "google/cadvisor"
     volumes:

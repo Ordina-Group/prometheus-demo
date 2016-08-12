@@ -12,8 +12,10 @@ This project contains the following components:
 * [cAdvisor](https://github.com/google/cadvisor) for exposing container and host metrics
 * A voting app with a _RESTish_ API which exposes custom metrics for the votes
 * A voting generator app that generates votes
+* [Alert Manager](https://github.com/prom/alertmanager) for managing alerts (TODO)
+* A custom application that displays the alerts (TODO)
 
-## Running This Demo
+## Running This Project
 
 **Prerequisites**
 
@@ -99,3 +101,14 @@ $ curl -X GET http://$(docker-compose port voting-app 8080)/api/results
 The voting-generator app,
 as the name suggests,
 generates votes.
+
+Pass in the `-vote` flag for which thing it should vote for (e.g. `-vote=dog`).
+
+The `docker-compose.yml` file contains two different voting generator services:
+`vote-cats` and `vote-dogs`.
+If you wish to generate more votes,
+you can scale them up with `docker-compose scale`:
+
+```bash
+$ docker-compose scale vote-dogs=3 vote-cats=2
+```

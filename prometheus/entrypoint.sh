@@ -3,4 +3,4 @@
   -storage.local.path=/prometheus \
   -web.console.libraries=/etc/prometheus/console_libraries \
   -web.console.templates=/etc/prometheus/consoles \
-  -alertmanager.url=http://alert-manager
+  -alertmanager.url=http://alertmanager:9093

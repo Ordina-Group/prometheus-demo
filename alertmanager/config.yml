@@ -14,4 +14,4 @@ receivers:
       # Whether or not to notify about resolved alerts.
       - send_resolved: true
         # The endpoint to send HTTP POST requests to.
-        url: http://alert-console
+        url: http://alert-console:8080

@@ -26,10 +26,21 @@ services:
     volumes:
       - grafana-storage:/var/lib/grafana
 
-#  alertmanager:
-#    image: prom/alertmanager
-#    networks:
-#      - monitoring
+  alertmanager:
+    image: prom/alertmanager
+    networks:
+      - monitoring
+    volumes:
+      - ./alertmanager/config.yml:/etc/alertmanager/config.yml:ro
+    ports:
+      - "9093"  
+
+  alert-console:
+    image: ordina-jworks/alert-console
+    networks:
+      - monitoring
+    ports:
+      - "8080"
 
   cadvisor:
     image: "google/cadvisor"

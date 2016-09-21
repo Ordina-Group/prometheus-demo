@@ -1,0 +1,17 @@
+global:
+  # ResolveTimeout is the time after which an alert is declared resolved
+  # if it has not been updated.
+  resolve_timeout: 5m
+
+route:
+  # Default receiver
+  receiver: 'alert_console'
+
+# Configure the alert console as a webhook receiver
+receivers:
+  - name: 'alert_console'
+    webhook_configs:
+      # Whether or not to notify about resolved alerts.
+      - send_resolved: true
+        # The endpoint to send HTTP POST requests to.
+        url: http://alert-console

@@ -4,10 +4,14 @@ global:
   evaluation_interval: 15s # By default, scrape targets every 15 seconds.
   # scrape_timeout is set to the global default (10s).
 
+# Rule files specifies a list of files from which rules are read.
+rule_files:
+  - '/etc/prometheus/voting.rules'
+
 # A scrape configuration containing exactly one endpoint to scrape:
 # Here it's Prometheus itself.
 scrape_configs:
   - job_name: 'prommer-job'
     scrape_interval: 5s
     file_sd_configs:
-    - names: ['/etc/prometheus/target-groups.json']
+    - files: ['/etc/prometheus/target-groups.json']

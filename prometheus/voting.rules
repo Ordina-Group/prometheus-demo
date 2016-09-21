@@ -1,0 +1,8 @@
+# Alert if too many people vote for cats
+ALERT TooManyCatVotes
+  IF votes_amount_total{name="cat"} > votes_amount_total{name="dog"}
+  LABELS { severity = "critical" }
+  ANNOTATIONS {
+    summary = "Too many votes for cats!",
+    description = "There are more votes for cats than for dogs!",
+  }

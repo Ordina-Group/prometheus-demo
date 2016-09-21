@@ -14,4 +14,4 @@ scrape_configs:
   - job_name: 'prommer-job'
     scrape_interval: 5s
     file_sd_configs:
-    - files: ['/etc/prometheus/target-groups.json']
+    - names: ['/etc/prometheus/target-groups/target-groups.json']

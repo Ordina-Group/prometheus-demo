@@ -9,13 +9,14 @@ services:
     networks:
       - monitoring
     volumes:
-      - targetgroups:/etc/prometheus
+      - targetgroups:/etc/prometheus/target-groups
 
   prommer:
     image: tomverelst/prommer
+    command: -target-file=/etc/prometheus/target-groups/target-groups.json
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - targetgroups:/etc/prometheus
+      - targetgroups:/etc/prometheus/target-groups
 
   grafana:
     image: grafana/grafana
@@ -33,7 +34,7 @@ services:
     volumes:
       - ./alertmanager/config.yml:/etc/alertmanager/config.yml:ro
     ports:
-      - "9093"  
+      - "9093"
 
   alert-console:
     image: ordina-jworks/alert-console

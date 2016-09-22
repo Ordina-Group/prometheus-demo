@@ -8,12 +8,12 @@ This project contains the following components:
 
 * [Prometheus](https://prometheus.io)
 * [Prommer](https://github.com/tomverelst/prommer) for custom target discovery
+* [Alert Manager](https://github.com/prom/alertmanager) for managing alerts
 * [Grafana](http://grafana.org/) for metric and analytic dashboards
 * [cAdvisor](https://github.com/google/cadvisor) for exposing container and host metrics
 * A voting app with a _RESTish_ API which exposes custom metrics for the votes
 * A voting generator app that generates votes
-* [Alert Manager](https://github.com/prom/alertmanager) for managing alerts (TODO)
-* A custom application that displays the alerts (TODO)
+* An alert console that displays the alerts
 
 ## Running This Project
 

@@ -64,7 +64,7 @@ The label `vote` is added and the value is set to the name of the vote.
 
 **Metrics**
 
-* `votes_amount_total{vote=<name>}` - Counter that returns the total amount of votes
+* `votes_amount_total{name=<name>}` - Counter that returns the total amount of votes
 
 **Endpoints**
 
@@ -111,4 +111,17 @@ you can scale them up with `docker-compose scale`:
 
 ```bash
 $ docker-compose scale vote-dogs=3 vote-cats=2
+```
+
+## Alert Console
+
+The alert console is an application that consumes the alerts sent by the Alert Manager.
+It is configured as a webhook receiver in the Alert Manager.
+When it receives an alert,
+it logs the JSON body to the console.
+
+You can view the logs of the alert console using `docker-compose logs`:
+
+```bash
+$ docker-compose logs --tail="all" -f alert-console
 ```
